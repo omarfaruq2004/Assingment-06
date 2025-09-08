@@ -14,15 +14,19 @@ const displayTreecatagory =(tree)=>{
         const treeBtn =document.createElement("div");
         treeBtn.innerHTML =`
      
-<button onclick
-="perTreeBtn(${trees.id})" class="btn w-[250px] h-[35px]">${trees.category_name}</button>
+<button id="categories-btn-${trees.id}" onclick
+="perTreeBtn(${trees.id})" class="btn w-[250px] h-[35px] rounded-xl all-trees-btn">${trees.category_name}</button>
       `;
       AllTreesCategories.append(treeBtn);
     })
 }
 
 
-
+const removeActive=()=>{
+    const allTreesBtn =document.querySelectorAll(".all-trees-btn");
+    // console.log(allTreesBtn);
+    allTreesBtn.forEach(btn => btn.classList.remove("active"));
+};
 
 
 const perTreeBtn =(id)=> {
@@ -32,9 +36,50 @@ const url =`https://openapi.programming-hero.com/api/category/${id} `;
 
 fetch(url)
 .then(res => res.json())
-.then(json => displayperbtn(json.plants));
+.then(json => {
+    removeActive();
+    const clickBtn = document.getElementById(`categories-btn-${id}`);
+    // console.log(clickBtn);
+ clickBtn.classList.add("active");
+
+    displayperbtn(json.plants);
+});
 
 };
+
+const treesModal = (id)=>{
+const url =` https://openapi.programming-hero.com/api/plant/${id} `;
+
+fetch(url)
+.then(res => res.json())
+.then(data => displayTreeModal(data.plants));
+   
+};
+
+const displayTreeModal = (modal) => {
+    console.log(modal);
+   const modalContainer =document.getElementById("modal-container");
+
+
+
+   modalContainer.innerHTML = `
+     <div  class="md:w-[450px] md:h-[450px] space-y-2">
+    <h1 class="text-[32px] font-semibold">${modal.name}</h1>
+    <figure ><img src="${modal.image}" class="w-[430px] h-[250px] mx-auto rounded-xl"alt=""></figure>
+    <h1 > <span class="text-[20px] font-medium">Category:</span>${modal.category}</h1>
+    <p><span class="text-[20px] font-medium">Price:</span><i class="fa-solid fa-bangladeshi-taka-sign"></i>  ${modal.price}</p>
+    <p><span class="text-[20px] font-medium">Description:</span>${modal.description}</p>
+
+  </div>
+
+   
+   `;
+
+   document.getElementById("my_modal").showModal();
+
+};
+
+
 
 const displayperbtn=(plants)=>{
     // console.log(plant);
@@ -48,10 +93,10 @@ const displayperbtn=(plants)=>{
 const plantBtn =document.createElement("div");
 plantBtn.innerHTML=`
 
-<div class="w-[344px] max-h-[500px] rounded-[8px] bg-[#CFF0DC]">
+<div class="w-[344px] max-h-[500px] rounded-[8px] bg-[#CFF0DC] shadow-sm ">
 
-  <img src="${plant.image}" class="w-[311px] h-[186px]  pt-[16px] pl-[30px]" alt="">
-   <h1 class="pl-7 pt-4 font-semibold">${plant.name}</h1>
+<figure>  <img src="${plant.image}" class="w-[300px] h-[186px]   rounded-xl mx-auto" alt=""></figure>
+   <h1 class="pl-7 pt-4 font-semibold" onclick="treesModal(${plant.id})">${plant.name}</h1>
    <p class="pl-7 pr-2 mt-2 text-[12px]">${plant.description}</p>
     
    <div class="flex justify-between px-7 mt-5">
@@ -59,7 +104,7 @@ plantBtn.innerHTML=`
     <h1><i class="fa-solid fa-bangladeshi-taka-sign"></i> ${plant.price}</h1>
    </div>
 
-   <button class="bg-[#15803D] w-[311px] h-[43px] rounded-3xl text-[#CFF0DC] ml-4 mt-3 mb-5">Add to Cart</button>
+   <button onClick="addCardBtnaa("oma)" class="bg-[#15803D] w-[311px] h-[43px] rounded-3xl text-[#CFF0DC] ml-4 mt-3 mb-5">Add to Cart</button>
 
 </div>
 
@@ -75,17 +120,6 @@ cardContainer.append(plantBtn);
 
 
 };
-
-
-
-
-
-
-
-
-
-
-
 
 
 
