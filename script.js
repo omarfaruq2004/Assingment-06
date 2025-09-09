@@ -133,7 +133,9 @@ const url =` https://openapi.programming-hero.com/api/plant/${id} `;
 }
 
 const displayHistory =(history => {
-console.log(history);
+// console.log(history);
+
+  alert(`${history.name} has been added to the cart`);
 
    const modalContainer =document.getElementById("history-container");
 
