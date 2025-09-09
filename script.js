@@ -122,6 +122,90 @@ cardContainer.append(plantBtn);
 };
 
 
+const plantAll = () => {
+  const url ="https://openapi.programming-hero.com/api/plants";
+  fetch(url)
+  .then(res => res.json())
+  .then(json => displayPlantAll(json.plants));
+}
+
+const displayPlantAll =(shows => {
+ console.log(shows)
+
+const displayCard =document.getElementById("display");
+displayCard.innerHTML="";
+
+shows.forEach(show => {
+  console.log(show);
+
+const allCard =document.createElement("div");
+allCard.innerHTML=`
+
+<div class="w-[344px] max-h-[500px] rounded-[8px] bg-[#CFF0DC] shadow-sm ">
+
+<figure>  <img src="${show.image}" class="w-[300px] h-[186px]   rounded-xl mx-auto" alt=""></figure>
+   <h1 class="pl-7 pt-4 font-semibold" onclick="treesModal(${show.id})">${show.name}</h1>
+   <p class="pl-7 pr-2 mt-2 text-[12px]">${show.description}</p>
+    
+   <div class="flex justify-between px-7 mt-5">
+    <button class="w-[150px] h-[28px] bg-[#DCFCE7] rounded-3xl text-[#15803D] text-[12px]">${show.category}</button>
+    <h1><i class="fa-solid fa-bangladeshi-taka-sign"></i> ${show.price}</h1>
+   </div>
+
+   <button onClick="addCardBtnaa("oma)" class="bg-[#15803D] w-[311px] h-[43px] rounded-3xl text-[#CFF0DC] ml-4 mt-3 mb-5">Add to Cart</button>
+
+</div>
+
+
+
+`;
+
+displayCard.append(allCard);
+
+
+
+})
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+plantAll();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
