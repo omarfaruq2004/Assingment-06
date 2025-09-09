@@ -32,7 +32,11 @@ const removeActive=()=>{
 const perTreeBtn =(id)=> {
 //    console.log(id);
 
+
 const url =`https://openapi.programming-hero.com/api/category/${id} `;
+
+cardSpinner(true);
+
 
 fetch(url)
 .then(res => res.json())
@@ -45,8 +49,9 @@ fetch(url)
     displayperbtn(json.plants);
 });
 
-};
 
+
+};
 
 
 
@@ -119,6 +124,7 @@ cardContainer.append(plantBtn);
 
   });
 
+cardSpinner(false);
 
 
 
@@ -149,7 +155,7 @@ const displayHistory =(history => {
         <h1>${history.name}</h1>
         <p><i class="fa-solid fa-bangladeshi-taka-sign"></i> ${history.price}</p>
       </div>
-      <div><i class="fa-solid fa-xmark"></i></div>
+      <div class="remove-btn" onclick ="handleDelete('${history.id}')"><i class="fa-solid fa-xmark"></i></div>
 
     </div>
   
@@ -160,18 +166,45 @@ modalContainer.append(historyAllCall);
 
 const taka =parseInt(document.getElementById("Total-amount").innerText);
 
-console.log(taka);
+// console.log(taka);
 
 const newAmount = taka + history.price ;
 
-console.log(newAmount);
+// console.log(newAmount);
 
 document.getElementById("Total-amount").innerText = newAmount ;
 
-
-
-
 });
+
+ 
+
+
+
+
+
+const handleDelete = (deleteId) =>{
+
+
+
+  
+    
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -231,6 +264,21 @@ displayCard.append(allCard);
 
 
 
+// spinner
+
+
+const cardSpinner = (status)=>{
+    if(status == true){
+      document.getElementById("spinner").classList.remove("hidden");
+      document.getElementById("card-container").classList.add("hidden");
+    }
+    else{
+              document.getElementById("card-container").classList.remove("hidden");
+      document.getElementById("spinner").classList.add("hidden");
+
+    };
+};
+
 
 
 
@@ -250,29 +298,6 @@ displayCard.append(allCard);
 
 
 plantAll();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 loadTreeCategory();
