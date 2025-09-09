@@ -47,6 +47,9 @@ fetch(url)
 
 };
 
+
+
+
 const treesModal = (id)=>{
 const url =` https://openapi.programming-hero.com/api/plant/${id} `;
 
@@ -57,7 +60,7 @@ fetch(url)
 };
 
 const displayTreeModal = (modal) => {
-    console.log(modal);
+    
    const modalContainer =document.getElementById("modal-container");
 
 
@@ -104,7 +107,7 @@ plantBtn.innerHTML=`
     <h1><i class="fa-solid fa-bangladeshi-taka-sign"></i> ${plant.price}</h1>
    </div>
 
-   <button onClick="addCardBtnaa("oma)" class="bg-[#15803D] w-[311px] h-[43px] rounded-3xl text-[#CFF0DC] ml-4 mt-3 mb-5">Add to Cart</button>
+   <button onClick="addCardBtn(${plant.id})" class="bg-[#15803D] w-[311px] h-[43px] rounded-3xl text-[#CFF0DC] ml-4 mt-3 mb-5">Add to Cart</button>
 
 </div>
 
@@ -121,6 +124,59 @@ cardContainer.append(plantBtn);
 
 };
 
+const addCardBtn =(id) =>{
+const url =` https://openapi.programming-hero.com/api/plant/${id} `;
+  fetch(url)
+  .then(res => res.json())
+  .then(json => displayHistory(json.plants));
+
+}
+
+const displayHistory =(history => {
+console.log(history);
+
+   const modalContainer =document.getElementById("history-container");
+
+   const historyAllCall =document.createElement("div");
+
+   historyAllCall.innerHTML= `
+   
+      <div class="w-[220px] h-[85px] bg-[#CFF0DC] shadow-sm rounded-xl ml-4 flex justify-between items-center px-5">
+ 
+      <div>
+        <h1>${history.name}</h1>
+        <p><i class="fa-solid fa-bangladeshi-taka-sign"></i> ${history.price}</p>
+      </div>
+      <div><i class="fa-solid fa-xmark"></i></div>
+
+    </div>
+  
+   
+   `;
+
+modalContainer.append(historyAllCall);
+
+const taka =parseInt(document.getElementById("Total-amount").innerText);
+
+console.log(taka);
+
+const newAmount = taka + history.price ;
+
+console.log(newAmount);
+
+document.getElementById("Total-amount").innerText = newAmount ;
+
+
+
+
+});
+
+
+
+
+
+
+
 
 const plantAll = () => {
   const url ="https://openapi.programming-hero.com/api/plants";
@@ -130,13 +186,13 @@ const plantAll = () => {
 }
 
 const displayPlantAll =(shows => {
- console.log(shows)
+ 
 
 const displayCard =document.getElementById("display");
 displayCard.innerHTML="";
 
 shows.forEach(show => {
-  console.log(show);
+  
 
 const allCard =document.createElement("div");
 allCard.innerHTML=`
@@ -152,7 +208,7 @@ allCard.innerHTML=`
     <h1><i class="fa-solid fa-bangladeshi-taka-sign"></i> ${show.price}</h1>
    </div>
 
-   <button onClick="addCardBtnaa("oma)" class="bg-[#15803D] w-[311px] h-[43px] rounded-3xl text-[#CFF0DC] ml-4 mt-3 mb-5">Add to Cart</button>
+   <button onClick="addCardBtn(${show.id})" class="bg-[#15803D] w-[311px] h-[43px] rounded-3xl text-[#CFF0DC] ml-4 mt-3 mb-5">Add to Cart</button>
 
 </div>
 
@@ -169,6 +225,12 @@ displayCard.append(allCard);
 
 
 });
+
+
+
+
+
+
 
 
 
